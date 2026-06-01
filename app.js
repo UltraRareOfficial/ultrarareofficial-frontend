@@ -310,6 +310,9 @@ function openModal(card) {
   condBar.style.width = "0%";
   condBar.style.background = cond.color;
 
+  const telegramMsg = encodeURIComponent(`ciao ti scrivo per ${card.nome} è ancora disponibile?`);
+  document.getElementById("modalTelegramBtn").href = `https://t.me/Zarathustra2030?text=${telegramMsg}`;
+
   detailModal.classList.remove("hidden");
   document.body.style.overflow = "hidden";
 

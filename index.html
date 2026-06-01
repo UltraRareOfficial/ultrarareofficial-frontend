@@ -120,9 +120,9 @@
           <div class="featured__meta" id="featuredMeta"></div>
           <p class="featured__desc" id="featuredDesc"></p>
           <div class="featured__actions">
-            <button class="featured__btn featured__btn--primary" id="featuredContactBtn">
+            <a href="https://t.me/Zarathustra2030" target="_blank" rel="noopener" class="featured__btn featured__btn--primary" id="featuredContactBtn">
               Richiedi informazioni
-            </button>
+            </a>
             <button class="featured__btn featured__btn--ghost" onclick="document.getElementById('statsBar').scrollIntoView({behavior:'smooth'})">
               <ion-icon name="arrow-down-outline"></ion-icon> Vedi catalogo
             </button>
@@ -257,6 +257,12 @@
               <div class="condition-bar__fill" id="modalConditionBar"></div>
             </div>
           </div>
+          <a href="#" target="_blank" rel="noopener" class="modal-telegram-btn" id="modalTelegramBtn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+              <path d="M11.944 0A12 12 0 1 0 24 12.056A12.01 12.01 0 0 0 11.944 0Zm5.654 8.22l-1.63 7.68c-.12.54-.44.67-.9.42l-2.48-1.83l-1.2 1.15a.63.63 0 0 1-.5.24l.18-2.52l4.56-4.12c.2-.18-.04-.27-.3-.1l-5.64 3.55l-2.43-.76c-.53-.16-.54-.53.11-.78l9.5-3.66c.44-.16.82.1.68.78Z"/>
+            </svg>
+            Chiedi informazioni
+          </a>
         </div>
       </div>
     </div>
@@ -276,6 +282,14 @@
         <p>Pokémon Card Collection</p>
       </div>
     </footer>
+
+    <!-- FLOATING TELEGRAM BUTTON -->
+    <a href="https://t.me/Zarathustra2030" target="_blank" rel="noopener" class="telegram-fab" aria-label="Contattami su Telegram">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
+        <path d="M11.944 0A12 12 0 1 0 24 12.056A12.01 12.01 0 0 0 11.944 0Zm5.654 8.22l-1.63 7.68c-.12.54-.44.67-.9.42l-2.48-1.83l-1.2 1.15a.63.63 0 0 1-.5.24l.18-2.52l4.56-4.12c.2-.18-.04-.27-.3-.1l-5.64 3.55l-2.43-.76c-.53-.16-.54-.53.11-.78l9.5-3.66c.44-.16.82.1.68.78Z"/>
+      </svg>
+      <span class="telegram-fab__label">Contattami</span>
+    </a>
 
     <script src="app.js"></script>
   </body>
