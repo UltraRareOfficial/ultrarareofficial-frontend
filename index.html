@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UltraRare – Pokémon Card Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+  <body>
+    <!-- FLOATING PARTICLES (pokeball dots) -->
+    <div class="particles" id="particles"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__inner">
+        <div class="header__brand">
+          <div class="pokeball-logo">
+            <div class="pokeball-logo__top"></div>
+            <div class="pokeball-logo__band"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button"></div>
+          </div>
+          <div>
+            <h1>UltraRare</h1>
+            <span class="header__tagline">Pokémon Card Collection</span>
+          </div>
+        </div>
+        <nav class="header__nav">
+          <button class="filter-chip active" data-filter="all">
+            <ion-icon name="albums-outline"></ion-icon>
+            Tutte
+          </button>
+          <button class="filter-chip" data-filter="available">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            Disponibili
+          </button>
+          <button class="filter-chip" data-filter="holo">
+            <ion-icon name="sparkles-outline"></ion-icon>
+            Holo
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO SEARCH -->
+    <section class="hero">
+      <div class="hero__content">
+        <h2 class="hero__title">
+          Esplora la <span class="text-gradient">Collezione</span>
+        </h2>
+        <p class="hero__subtitle">Scopri le carte Pokémon disponibili nel nostro catalogo</p>
+        <div class="hero__search">
+          <ion-icon name="search-outline"></ion-icon>
+          <input type="text" id="searchInput" placeholder="Cerca una carta..." />
+          <div class="hero__search-glow"></div>
+        </div>
+      </div>
+      <!-- Physics pokeballs -->
+      <div class="hero__physics-container" id="physicsContainer">
+        <div class="hero__ball" data-size="70">
+          <div class="pokeball-logo" style="width:70px;height:70px;border-width:3px;">
+            <div class="pokeball-logo__top"></div>
+            <div class="pokeball-logo__band" style="height:3px;"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button" style="width:16px;height:16px;border-width:3px;"></div>
+          </div>
+        </div>
+        <div class="hero__ball" data-size="55">
+          <div class="pokeball-logo" style="width:55px;height:55px;border-width:3px;">
+            <div class="pokeball-logo__top" style="background:#3B4CCA;"></div>
+            <div class="pokeball-logo__band" style="height:3px;"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button" style="width:13px;height:13px;border-width:3px;"></div>
+          </div>
+        </div>
+        <div class="hero__ball" data-size="45">
+          <div class="pokeball-logo" style="width:45px;height:45px;border-width:2px;">
+            <div class="pokeball-logo__top" style="background:#2D2D2D;"></div>
+            <div class="pokeball-logo__band" style="height:2px;"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button" style="width:11px;height:11px;border-width:2px;"></div>
+          </div>
+        </div>
+        <div class="hero__ball" data-size="60">
+          <div class="pokeball-logo" style="width:60px;height:60px;border-width:3px;">
+            <div class="pokeball-logo__top"></div>
+            <div class="pokeball-logo__band" style="height:3px;"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button" style="width:14px;height:14px;border-width:3px;"></div>
+          </div>
+        </div>
+        <div class="hero__ball" data-size="40">
+          <div class="pokeball-logo" style="width:40px;height:40px;border-width:2px;">
+            <div class="pokeball-logo__top" style="background:#FFDE00;"></div>
+            <div class="pokeball-logo__band" style="height:2px;"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button" style="width:10px;height:10px;border-width:2px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED SECTION -->
+    <section class="featured hidden" id="featuredSection">
+      <div class="featured__inner">
+        <div class="featured__text">
+          <span class="featured__label" id="featuredLabel">
+            <ion-icon name="star"></ion-icon>
+            Featured this week
+          </span>
+          <h2 class="featured__name" id="featuredName"></h2>
+          <div class="featured__meta" id="featuredMeta"></div>
+          <p class="featured__desc" id="featuredDesc"></p>
+          <div class="featured__actions">
+            <button class="featured__btn featured__btn--primary" id="featuredContactBtn">
+              Richiedi informazioni
+            </button>
+            <button class="featured__btn featured__btn--ghost" onclick="document.getElementById('statsBar').scrollIntoView({behavior:'smooth'})">
+              <ion-icon name="arrow-down-outline"></ion-icon> Vedi catalogo
+            </button>
+          </div>
+        </div>
+        <div class="featured__card-wrap">
+          <div class="featured__card" id="featuredCard">
+            <div class="featured__card-glow"></div>
+            <div class="featured__card-inner">
+              <img id="featuredImg" src="" alt="" />
+              <div class="featured__card-overlay">
+                <div class="featured__card-info">
+                  <span class="featured__card-set" id="featuredCardSet"></span>
+                  <span class="featured__card-lang" id="featuredCardLang"></span>
+                </div>
+                <h3 class="featured__card-name" id="featuredCardName"></h3>
+                <div class="featured__card-badges">
+                  <span class="featured__card-set-num" id="featuredCardSetNum"></span>
+                  <span class="featured__card-cond" id="featuredCardCond"></span>
+                  <span class="featured__card-holo hidden" id="featuredCardHolo">HOLO</span>
+                </div>
+              </div>
+              <span class="featured__card-status" id="featuredCardStatus">Disponibile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar" id="statsBar">
+      <div class="stats-bar__inner">
+        <div class="stat-item">
+          <ion-icon name="layers-outline"></ion-icon>
+          <div>
+            <span class="stat-item__value" id="statTotal">0</span>
+            <span class="stat-item__label">Carte totali</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+          <div>
+            <span class="stat-item__value" id="statAvailable">0</span>
+            <span class="stat-item__label">Disponibili</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="sparkles-outline"></ion-icon>
+          <div>
+            <span class="stat-item__value" id="statHolo">0</span>
+            <span class="stat-item__label">Olografiche</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="globe-outline"></ion-icon>
+          <div>
+            <span class="stat-item__value" id="statLanguages">0</span>
+            <span class="stat-item__label">Lingue</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARDS SECTION -->
+    <main class="catalog">
+      <!-- SKELETON LOADER -->
+      <div class="cards-grid" id="skeletonGrid">
+        <div class="skeleton-card"><div class="skeleton skeleton--img"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton--img"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton--img"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton--img"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton--img"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton--img"></div><div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text"></div></div>
+      </div>
+
+      <!-- REAL CARDS -->
+      <div class="cards-grid hidden" id="cardsGrid"></div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state hidden" id="emptyState">
+        <div class="pokeball-logo pokeball-logo--large">
+          <div class="pokeball-logo__top"></div>
+          <div class="pokeball-logo__band"></div>
+          <div class="pokeball-logo__bottom"></div>
+          <div class="pokeball-logo__button"></div>
+        </div>
+        <h3>Nessuna carta trovata</h3>
+        <p>Prova a modificare i filtri o il termine di ricerca</p>
+      </div>
+    </main>
+
+    <!-- DETAIL MODAL -->
+    <div class="modal-overlay hidden" id="detailModal">
+      <div class="modal-card" id="modalContent">
+        <button class="modal-close" id="modalClose">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <div class="modal-card__img">
+          <img id="modalImg" src="" alt="" />
+        </div>
+        <div class="modal-card__info">
+          <span class="modal-card__holo-badge hidden" id="modalHolo">
+            <ion-icon name="sparkles"></ion-icon> Olografica
+          </span>
+          <h2 id="modalName"></h2>
+          <div class="modal-card__details">
+            <div class="detail-row">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              <span><strong>Condizioni:</strong> <span id="modalCondizioni"></span></span>
+            </div>
+            <div class="detail-row">
+              <ion-icon name="folder-outline"></ion-icon>
+              <span><strong>Set:</strong> <span id="modalSet"></span></span>
+            </div>
+            <div class="detail-row">
+              <ion-icon name="language-outline"></ion-icon>
+              <span><strong>Lingua:</strong> <span id="modalLingua"></span></span>
+            </div>
+            <div class="detail-row">
+              <ion-icon name="copy-outline"></ion-icon>
+              <span><strong>Quantità:</strong> <span id="modalQuantita"></span></span>
+            </div>
+            <div class="detail-row">
+              <ion-icon name="pricetag-outline"></ion-icon>
+              <span><strong>Stato:</strong> <span id="modalDisponibilita"></span></span>
+            </div>
+          </div>
+          <!-- CONDITION HP BAR -->
+          <div class="condition-bar">
+            <span class="condition-bar__label">Condizione</span>
+            <div class="condition-bar__track">
+              <div class="condition-bar__fill" id="modalConditionBar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="pokeball-logo pokeball-logo--small">
+            <div class="pokeball-logo__top"></div>
+            <div class="pokeball-logo__band"></div>
+            <div class="pokeball-logo__bottom"></div>
+            <div class="pokeball-logo__button"></div>
+          </div>
+          <span>UltraRare</span>
+        </div>
+        <p>Pokémon Card Collection</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
