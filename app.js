@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:3001/pokemonCards";
-const FEATURED_URL = "http://localhost:3001/featuredCard";
+const API_URL = "https://ultrarareofficial-backend.onrender.com/pokemonCards";
+const FEATURED_URL = "https://ultrarareofficial-backend.onrender.com/featuredCard";
 
 let allCards = [];
 let currentFilter = "all";
