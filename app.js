@@ -220,37 +220,53 @@ function renderCards(cards) {
     const typeEmoji = card.olografica ? "✦" : "●";
     const condLabel = condShort[card.condizioni] || card.condizioni;
     const condColor = condColors[card.condizioni] || "#ffde00";
+    const condPct = (conditionMap[card.condizioni] || { percent: 50 }).percent;
     const lang = langShort[card.lingua] || card.lingua;
 
     const el = document.createElement("div");
-    el.className = "pokemon-card";
+    el.className = "pokemon-card" + (card.olografica ? " pokemon-card--holo" : "");
     el.onclick = () => openModal(card);
 
     el.innerHTML = `
-      <div class="pokemon-card__header">
-        <span class="pokemon-card__type-dot">${typeEmoji}</span>
-        <span class="pokemon-card__title">${card.nome}</span>
-        ${card.disponibilita
-          ? '<span class="pokemon-card__avail pokemon-card__avail--yes">DISPONIBILE</span>'
-          : '<span class="pokemon-card__avail pokemon-card__avail--no">NON DISP.</span>'}
-      </div>
-      <div class="pokemon-card__img-wrap">
-        <img class="pokemon-card__img" src="${card.foto}" alt="${card.nome}" loading="lazy" />
-        ${card.olografica ? '<div class="pokemon-card__holo-overlay"></div>' : ""}
-        <span class="pokemon-card__name-overlay">${card.nome}</span>
-      </div>
-      <div class="pokemon-card__footer">
-        <div class="pokemon-card__footer-left">
-          <span class="pokemon-card__set">${card.set || "—"}</span>
-          <span class="pokemon-card__lang">🌐 ${lang}</span>
+      <div class="pokemon-card__inner">
+        <div class="pokemon-card__header">
+          <span class="pokemon-card__type-dot">${typeEmoji}</span>
+          <span class="pokemon-card__title">${card.nome}</span>
+          <span class="pokemon-card__hp">
+            <span class="pokemon-card__hp-label">Cond</span>
+            <span class="pokemon-card__hp-val" style="color:${condColor}">${condLabel}</span>
+          </span>
         </div>
-        <div class="pokemon-card__footer-right">
-          ${card.quantita ? `<span class="pokemon-card__qty">${card.quantita}/${card.quantita}</span>` : ""}
+        <div class="pokemon-card__img-wrap">
+          <img class="pokemon-card__img" src="${card.foto}" alt="${card.nome}" loading="lazy" />
+          ${card.olografica ? '<div class="pokemon-card__holo-overlay"></div>' : ""}
+          ${card.olografica ? '<span class="pokemon-card__holo-badge">✦ Holo</span>' : ""}
+          <span class="pokemon-card__status pokemon-card__status--${card.disponibilita ? "yes" : "no"}">${card.disponibilita ? "Disponibile" : "Non disp."}</span>
         </div>
-      </div>
-      <div class="pokemon-card__badges">
-        <span class="pokemon-card__cond-badge" style="background:${condColor}">${condLabel}</span>
-        ${card.olografica ? '<span class="pokemon-card__holo-badge">HOLO</span>' : ""}
+        <div class="pokemon-card__cond">
+          <span class="pokemon-card__cond-label">Condizione</span>
+          <div class="pokemon-card__cond-track">
+            <div class="pokemon-card__cond-fill" style="width:${condPct}%;background:${condColor}"></div>
+          </div>
+          <span class="pokemon-card__cond-name">${card.condizioni}</span>
+        </div>
+        <div class="pokemon-card__stats">
+          <div class="pokemon-card__stat">
+            <ion-icon name="albums-outline"></ion-icon>
+            <span class="pokemon-card__stat-label">Set</span>
+            <span class="pokemon-card__stat-value pokemon-card__set">${card.set || "—"}</span>
+          </div>
+          <div class="pokemon-card__stat">
+            <ion-icon name="language-outline"></ion-icon>
+            <span class="pokemon-card__stat-label">Lingua</span>
+            <span class="pokemon-card__stat-value pokemon-card__lang">${lang}</span>
+          </div>
+          <div class="pokemon-card__stat">
+            <ion-icon name="copy-outline"></ion-icon>
+            <span class="pokemon-card__stat-label">Quantità</span>
+            <span class="pokemon-card__stat-value pokemon-card__qty">${card.quantita || 1}</span>
+          </div>
+        </div>
       </div>
     `;
 
@@ -325,8 +341,22 @@ function openModal(card) {
 }
 
 function closeModal() {
-  detailModal.classList.add("hidden");
+  if (detailModal.classList.contains("hidden") || detailModal.classList.contains("closing")) return;
+
+  detailModal.classList.add("closing");
   document.body.style.overflow = "";
+
+  const finish = () => {
+    detailModal.classList.remove("closing");
+    detailModal.classList.add("hidden");
+    detailModal.removeEventListener("animationend", onEnd);
+  };
+  const onEnd = (e) => {
+    if (e.target === detailModal) finish();
+  };
+  detailModal.addEventListener("animationend", onEnd);
+  // Fallback in case animationend doesn't fire
+  setTimeout(finish, 400);
 }
 
 // ===== PHYSICS ENGINE =====
